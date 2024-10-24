@@ -33,12 +33,12 @@ plt.scatter(x_test, y2_pred, color='green', label='Predykcje Modelu 2')
 
 x_plot = np.linspace(x.min(), x.max(), 100).reshape(-1, 1)
 
-c1_range = np.hstack([x_plot, np.ones(x_plot.shape)])
-y_range_pred1 = c1_range @ W1
+F1_plot = np.hstack([x_plot, np.ones(x_plot.shape)])
+y_range_pred1 = F1_plot @ W1
 plt.plot(x_plot, y_range_pred1, color='red', label='Model 1 - regresja liniowa')
 
-c2_range = np.hstack([x_plot ** 3, x_plot ** 2, x_plot, np.ones(x_plot.shape)])
-y_range_pred2 = c2_range @ W2
+F2_plot = np.hstack([x_plot ** 3, x_plot ** 2, x_plot, np.ones(x_plot.shape)])
+y_range_pred2 = F2_plot @ W2
 plt.plot(x_plot, y_range_pred2, color='green', label='Model 2 - regresja wielomianowa')
 
 plt.legend()
