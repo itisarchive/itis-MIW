@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-data = np.loadtxt("dane1.txt")
+data = np.loadtxt("dane2.txt")
 
 x = data[:, [0]]
 y = data[:, [1]]
