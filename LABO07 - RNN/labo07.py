@@ -50,10 +50,14 @@ def rnn_model(x_train, y_train, x_test, epochs=50, batch_size=16):
     x_train_rnn = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))
     x_test_rnn = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
 
+    normalization_layer = layers.Normalization()
+    normalization_layer.adapt(x_train_rnn)
+
     model = Sequential([
         layers.Input(shape=(x_train_rnn.shape[1], 1)),
+        normalization_layer,
         layers.LSTM(100),
-        # layers.Dropout(0.2),
+        layers.Dropout(0.2),
         layers.Dense(1)
     ])
 
@@ -68,8 +72,12 @@ def combined_model(x_train, volume_train, y_train, x_test, volume_test, epochs=5
     x_train_combined = np.hstack([x_train, volume_train.reshape(-1, 1)])
     x_test_combined = np.hstack([x_test, volume_test.reshape(-1, 1)])
 
+    normalization_layer = layers.Normalization()
+    normalization_layer.adapt(x_train_combined)
+
     model = Sequential([
         layers.Input(shape=(x_train_combined.shape[1],)),
+        normalization_layer,
         layers.Dense(64, activation='relu'),
         layers.Dropout(0.2),
         layers.Dense(1)
@@ -89,11 +97,11 @@ def main():
     ar_predictions, ar_coef = autoregressive_model(x_train, y_train, x_test)
     ar_mse = mean_squared_error(y_test, ar_predictions)
 
-    rnn_predictions, _ = rnn_model(x_train, y_train, x_test, epochs=100, batch_size=1)
+    rnn_predictions, _ = rnn_model(x_train, y_train, x_test, epochs=1000, batch_size=1)
     rnn_mse = mean_squared_error(y_test, rnn_predictions)
 
     volume_train, volume_test = train_test_split(extra_dim, test_size=0.3, shuffle=False)
-    combined_predictions = combined_model(x_train, volume_train, y_train, x_test, volume_test, epochs=100,
+    combined_predictions = combined_model(x_train, volume_train, y_train, x_test, volume_test, epochs=1000,
                                           batch_size=1)
     combined_mse = mean_squared_error(y_test, combined_predictions)
 
@@ -109,7 +117,7 @@ def main():
 
     print(f"AR Model MSE: {ar_mse}")
     print(f"RNN Model MSE: {rnn_mse}")
-    print(f"Combined Model (with Volume) MSE: {combined_mse}")
+    # print(f"Combined Model (with Volume) MSE: {combined_mse}")
 
 
 if __name__ == '__main__':
