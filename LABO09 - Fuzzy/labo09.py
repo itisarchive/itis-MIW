@@ -21,7 +21,7 @@ def main():
     ax0.plot(x_sunlight, sunlight_low, 'b', linewidth=1.5, label='Niskie')
     ax0.plot(x_sunlight, sunlight_med, 'g', linewidth=1.5, label='Średnie')
     ax0.plot(x_sunlight, sunlight_high, 'r', linewidth=1.5, label='Wysokie')
-    ax0.plot(x_sunlight, sunlight_very_high, 'purple', linewidth=1.5, label='Bardzo wysokie')
+    ax0.plot(x_sunlight, sunlight_very_high, 'y', linewidth=1.5, label='Bardzo wysokie')
     ax0.set_title('Nasłonecznienie')
     ax0.legend()
 
